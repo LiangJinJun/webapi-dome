@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+          width: 450px;
+          margin: 200px auto;
+        }
+    
+        #txt {
+          width: 350px;
+        }
+    
+        #pop {
+          width: 350px;
+          border: 1px solid red;
+        }
+    
+        #pop ul {
+          margin: 10px;
+          padding: 0px;
+          width: 200px;
+          list-style-type: none;
+    
+        }
+    
+        #pop ul li {
+    
+        }
+      </style>
+</head>
+<body>
+    <div id="box">
+        <input type="text" id="txt" value="">
+        <input type="button" value="搜索" id="btn">
+      
+     </div>
+
+     <script src="js/common.js"></script>
+     <script>
+         var keyWords=["520","580","590","梁金俊","梁金鹏","梁金辉","梁金城"];
+         /* 获取文本框注册键盘抬起事件 */
+         my$("txt").onkeyup=function(){
+            //-----坑
+2            /* 每一次的键盘抬起都判断页面中有没有这个div */
+                    if(my$("dv")){
+                /* 删除一次 */
+                my$("box").removeChild(my$("dv"));
+            }
+
+            /* 获取文本框输入的内容 */
+            var text=this.value;  //鼠标抬起之后获取文本框输入的内容
+            /* 临时数组---空数组-----> 存放对应上的数据 */
+            var tempArr=[];
+            /* 把文本框输入的内容和数组中的每个数据对比 */
+            for(var i=0;i<keyWords.length;i++){
+                /* .indexOf（元素值）； 返回的是索引，没有则是-1*/
+                /* 是否是最开始出现的 */
+                if(keyWords[i].indexOf(text)==0){
+                    /* 用户输入最开始出现字的和每个数组对比，有的话就追加到空数组里面 */
+                    tempArr.push(keyWords[i]);  //追加 到最后
+                }
+            }
+
+
+            /* 如果文本框是空的，临时数组是空的，不用创建div */
+            if(this.value.length==0||tempArr.length==0){
+                /* 如果页面中有这个div，删除这个div */
+                if(my$("dv")){
+                    my$("box").removeChild(my$("dv"));
+                }
+                return;
+            }
+
+            /* 创建div，把div加入id为box的div中 */
+            var dvObj=document.createElement("div");
+            my$("box").appendChild(dvObj); //追加到为box的div中
+            dvObj.id="dv";
+            dvObj.style.width="350px";
+            // dvObj.style.height="100px";
+            dvObj.style.border="1px solid green";
+
+            /* 循环遍历临时数组，创建对应的p标签 */
+            for(var i=0; i<tempArr.length; i++){
+                /* 创建p标签 */
+                var pObj=document.createElement("p");
+                /* 把p加到div中 */
+                dvObj.appendChild(pObj);
+                setInnerText(pObj,tempArr[i]);//每个数组的内容放到pObj里面去
+                pObj.id="pp";
+                pObj.style.margin=0;
+                pObj.style.padding=0;
+                pObj.style.cursor="pointer";
+                pObj.style.marginTop="5px";
+                pObj.style.marginLeft="5px";
+
+                /* 匿名函数 */
+
+                /* 鼠标进入 */
+                pObj.onmouseover=function(){
+                    this.style.backgroundColor="yellow";
+                };
+                /* 鼠标离开 */
+                pObj.onmouseout=function(){
+                    this.style.backgroundColor="";
+                };
+
+
+                 /* 命名函数 */
+
+              
+
+                //为同一个元素绑定多个不同的事件,指向相同的事件处理函数
+                    // my$("pp").onmouseover= f1;
+                    // my$("pp").onmouseout= f1;
+
+                    
+                    // function f1(e){
+                    //     switch (e.type){
+                    //         case "mouseover":
+                    //             this.style.backgrundColor="yellow";
+                    //             break;
+                    //         case "mouseout":
+                    //             this.style.backgrundColor=""; 
+                    //             break;   
+                    //     }
+                    // }
+              
+                  
+               
+            }
+         };
+     </script>
+</body>
+</html>

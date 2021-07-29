@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            position: absolute;
+        }
+
+        body {
+            height: 2000px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/bird.png" alt="11" id="im" />
+
+    <script src="js/common.js"></script>
+    <script>
+        /* 页面的鼠标移动事件 */
+        // document.onmousemove = function (e) {
+        // e = window.event || e
+        /* 鼠标相对于页面的可视区域的横坐标 */
+        // my$("im").style.left = e.clientX + "px"
+        /* 鼠标相对于页面的可视区域的纵坐标 */
+        // my$("im").style.top = e.clientY + "px"
+
+
+        /* 
+        pageX和pageY就是鼠标相对于页面的边界的坐标
+        就是clientY+向上卷曲出去的高度
+        和clientX+向左卷曲出去的宽度 
+        */
+
+        // my$("im").style.left = e.pageX + "px"
+        // my$("im").style.top = e.pageY + "px"
+
+        //     function getScroll() {
+        //         return {
+        //             left: window.pageXOffset || document.body.scrollLeft ||
+        //                 document.documentElement.scrollLeft || 0,
+        //             top: window.pageYOffset || document.body.scrollTop ||
+        //                 document.documentElement.scrollTOp || 0
+        //         }
+        //     }
+
+        //     e = window.event || e
+
+        //     my$("im").style.left = e.clientX + getScroll().left + "px"
+        //     my$("im").style.top = e.clientY + getScroll().top + "px"
+        // }
+
+        //   -----------------------------------------
+        /* 把代码放在一个对象中 */
+        var evt = {
+            /* window.event和事件参数对象e的兼容 */
+            getEvent: function (evt) {
+                return window.event || evt;
+            },
+            /* 可视区域的横坐标的兼容代码 */
+            getClientX: function (evt) {
+                return this.getEvent(evt).clientX;
+            },
+            /* 可视区域的纵坐标兼容代码 */
+            getClientY: function (evt) {
+                return this.getEvent(evt).clientY;
+            },
+            /* 页面向左卷曲出去的横坐标 */
+            getScroll: function () {
+                return window.pageXOffset || document.body.scrollLeft ||
+                    document.documentElement.scrollLeft || 0
+            },
+            /* 页面向上卷曲出去的纵坐标 */
+            getScroll: function () {
+                return window.pageYOffset || document.body.scrollTop ||
+                    document.documentElement.scrollTop || 0
+            },
+            /* 相对于页面的横坐标（pageX或者是clientX+scrollLeft） */
+            getPageX: function (evt) {
+                return this.getEvent(evt).pageX ? this.getEvent(evt).pageX : this.getClientX(evt) + this
+                    .getScrollLeft();
+            },
+            /* 相对于页面的纵坐标（pageY或者clientY+scrollTop） */
+            getPageY: function (evt) {
+                return this.getEvent(evt).pageY ? this.getEvent(evt).pageY : this.getClientY(evt) + this
+                    .getScrollTop();
+            }
+        };
+
+        document.onmousemove = function (e) {
+            my$("im").style.left = evt.getPageX(e) + "px";
+            my$("im").style.top = evt.getPageY(e) + "px";
+        }
+    </script>
+</body>
+
+</html>

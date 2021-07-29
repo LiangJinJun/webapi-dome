@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="button" value="拼接把" id="btn"><br />
+    <input type="text" value=""><br>
+    <input type="text" value=""><br>
+    <input type="text" value=""><br>
+    <input type="text" value=""><br>
+    <input type="text" value=""><br>
+
+
+    <script src="js/common.js"></script>
+    <script>
+        my$("btn").onclick = function () {
+            var inputs = document.getElementsByTagName("input")
+            str = []
+            for (i = 0; i < inputs.length; i++) {
+                if (inputs[i].type != "button") {
+                    str.push(inputs[i].value)
+                }
+            }
+            console.log(str.join("|"))
+        }
+    </script>
+</body>
+
+</html>
